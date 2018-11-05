@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/StephanieCherubin/I-Reddit-Away/issues"
   },
-  "homepage": "https://github.com/StephanieCherubin/I-Reddit-Away#readme"
+  "homepage": "https://github.com/StephanieCherubin/I-Reddit-Away#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
