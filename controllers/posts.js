@@ -1,16 +1,22 @@
+require('./controllers/posts.js')(app);
+
+const bodyParser = require('body-parser');
+
+// Use Body Parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator()); // Add after body parser initialization!
+
 // INDEX -- display a list of all posts
 // NEW -- display a list of all posts
 // CREATE -- create a new post
 
 
 
-app.post('/posts/new', function(req,res) {
-    console.log(req.user)
-    var post = new Post(req.body);
-    post.save( (err, post) => {
-        if(err){console.log(err)};
-        console.log(post);
-    });
+module.exports = app => {
+  // CREATE
+  app.post("/posts/new", (req, res) => {
+    console.log(req.body);
   });
 };
 
