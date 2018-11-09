@@ -8,7 +8,12 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', (req, res) => {
-  res.render('index', { msg: 'Handlebars are Cool!' });
+
+  Post.find({}).then((posts) => {
+    res.render('posts-index.handlebars', { posts })
+  }).catch((err) => {
+    console.log(err.message);
+  })
 })
 
 app.listen(3000, () => {
