@@ -14,6 +14,17 @@ app.use(expressValidator()); // Add after body parser initialization!
 
 module.exports = (app) => {
 
+  // SUBREDDIT
+  app.get("/n/:subreddit", function(req, res) {
+    Post.find({ subreddit: req.params.subreddit })
+      .then(posts => {
+        res.render("posts-index.hbs", { posts });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
   // CREATE
   app.post('/posts/new', (req, res) => {
     // INSTANTIATE INSTANCE OF POST MODEL
