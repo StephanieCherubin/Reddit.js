@@ -1,4 +1,3 @@
-require('./controllers/posts.js')(app);
 const Post = require('../models/post');
 
 const bodyParser = require('body-parser');
