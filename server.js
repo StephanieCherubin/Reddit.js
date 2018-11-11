@@ -1,6 +1,10 @@
 const express = require('express')
-const app = express()
-
+const app = express();
+const Posts = require('./controllers/posts.js')(app);
+const Post = require('./models/post.js');
+const Comments = require('./controllers/comments.js')(app);
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 var exphbs = require('express-handlebars');
 

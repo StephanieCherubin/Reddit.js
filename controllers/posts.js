@@ -1,11 +1,11 @@
 const Post = require('../models/post');
 
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 // Use Body Parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator()); // Add after body parser initialization!
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(expressValidator()); // Add after body parser initialization!
 
 // INDEX -- display a list of all posts
 // NEW -- display a list of all posts
@@ -18,7 +18,7 @@ module.exports = (app) => {
   app.get("/n/:subreddit", function(req, res) {
     Post.find({ subreddit: req.params.subreddit })
       .then(posts => {
-        res.render("posts-index.hbs", { posts });
+        res.render("posts-index.handlebars", { posts });
       })
       .catch(err => {
         console.log(err);
