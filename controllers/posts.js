@@ -27,6 +27,17 @@ module.exports = (app) => {
     })
   });
 
+  app.get("/posts/:id", function(req, res) {
+  // LOOK UP THE POST
+  Post.findById(req.params.id)
+    .then(post => {
+      res.render("post-show.handlebars", { post });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+});
+
 };
 
 
