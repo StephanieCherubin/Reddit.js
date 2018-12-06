@@ -1,6 +1,17 @@
+{{#if currentUser}}
+<h1 align="center"> Welcome Back {{ currentUser.username}}</h1>
+<br>
+
+{{else}}
+<h1 align="center">You must be logged in to post</h1>
+
+{{/if}}
+
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2">
+
       <ul>
+
         {{#each posts}}
         <li class="list-group-item">
           <div class="lead">
@@ -13,6 +24,8 @@
             </div>
         </li>
         {{/each}}
+
       </ul>
+
   </div>
 </div>
