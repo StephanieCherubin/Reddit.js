@@ -1,4 +1,4 @@
-const Post = require('../models/post');
+var Post = require('../models/post');
 
 // INDEX -- display a list of all posts
 // NEW -- display a list of all posts
@@ -32,15 +32,30 @@ module.exports = (app) => {
   });
 })
 
-// CREATE
-app.post('/posts/new', function (req, res){
-  // INSTANTIATE INSTANCE OF POST MODEL
-  console.log(req.user);
-  var post = new Post(req.body);
 
-  // SAVE INSTANCE OF POST MODEL TO DB
-  post.save((err, post) => {
-    // REDIRECT TO THE ROOT
-    return res.redirect(`/`);
+  // CREATE
+  app.post('/posts/new', function (req, res){
+    // INSTANTIATE INSTANCE OF POST MODEL
+    console.log(req.user);
+    var post = new Post(req.body);
+
+    // SAVE INSTANCE OF POST MODEL TO DB
+    post.save((err, post) => {
+      // REDIRECT TO THE ROOT
+      return res.redirect(`/`);
+    });
   });
-});
+
+  // CREATE
+  app.post("/posts", (req, res) => {
+    if (req.user) {
+      var post = new Post(req.body);
+
+      post.save(function(err, post) {
+        return res.redirect(`/`);
+      });
+    } else {
+      return res.status(401); // UNAUTHORIZED
+    }
+  });
+};

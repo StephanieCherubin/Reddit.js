@@ -1,7 +1,6 @@
-const Comment = require('../models/comment');
-const Post = require('../models/post');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = (app) => {
 
