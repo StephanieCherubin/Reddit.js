@@ -33,7 +33,7 @@ module.exports = (app) => {
 })
 
 
-  // CREATE
+  // NEW -- display a list of all posts
   app.post('/posts/new', function (req, res){
     // INSTANTIATE INSTANCE OF POST MODEL
     console.log(req.user);
@@ -47,15 +47,27 @@ module.exports = (app) => {
   });
 
   // CREATE
-  app.post("/posts", (req, res) => {
-    if (req.user) {
-      var post = new Post(req.body);
+  app.post('/posts', (req, res) => {
+      // Only allow logged in users to create posts
+      if (req.user) {
+          const post = new Post(req.body);
+          post.author = req.user._id;
+          post.save
+              .then(post => {
+                  return User.findById(req.user._id);
+          })
+          .then(user => {
+              user.posts.unshift(post);
+              user.save();
+              // Redirect to the new post
+              res.redirect('/posts/' + post._id);
+          })
+          .catch(err => {
+              console.log(err.message);
+          });
+      } else {
+          return res.status(401);
+      }
 
-      post.save(function(err, post) {
-        return res.redirect(`/`);
-      });
-    } else {
-      return res.status(401); // UNAUTHORIZED
-    }
-  });
+  })
 };
