@@ -37,13 +37,17 @@ module.exports = (app) => {
     })
   });
 
+  //Show a post
+  app.get('/posts/:id', (req, res) => {
+    var currentUser = req.user;
+
   // LOOK UP THE POST
   Post.findById(req.params.id).populate('comments').then((post) => {
     res.render('post-show.handlebars', { post })
   }).catch((err) => {
     console.log(err.message)
   });
-  };
+})
 
 
 
