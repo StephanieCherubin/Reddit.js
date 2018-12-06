@@ -28,7 +28,8 @@ module.exports = (app) => {
 
   // LOGIN FORM
   app.get('/login', (req, res) => {
-    res.render('login.handlebars');
+    var currentUser = req.user;
+    res.render('login.handlebars', { currentUser });
   });
 
     // LOGIN

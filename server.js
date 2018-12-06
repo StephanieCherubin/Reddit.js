@@ -28,14 +28,18 @@ var checkAuth = (req, res, next) => {
 };
 app.use(checkAuth);
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
+  var currentUser = req.user;
 
-  Post.find({}).then((posts) => {
-    res.render('posts-index.handlebars', { posts })
-  }).catch((err) => {
-    console.log(err.message);
-  })
-})
+  Post.find({})
+    .then((posts) => {
+      res.render('posts-index.handlebars', { posts, currentUser : req.user })
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+});
+
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!')
