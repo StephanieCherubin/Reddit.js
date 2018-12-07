@@ -1,37 +1,31 @@
-var Post = require('../models/post');
-
-// INDEX -- display a list of all posts
-// NEW -- display a list of all posts
-// CREATE -- create a new post
-
+const Post = require('../models/post');
 
 module.exports = (app) => {
-
-  // SUBREDDIT
-  app.get("/n/:subreddit", function(req, res) {
-    var currentUser = req.user;
-
-    Post.find({ subreddit: req.params.subreddit })
-      .then(posts => {
-        res.render("posts-index.handlebars", { posts, currentUser });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
 
   // SHOW -- display a specific post
   app.get('/posts/:id', (req, res) => {
     var currentUser = req.user;
 
   // LOOK UP THE POST
-  Post.findById(req.params.id).populate('comments').then((post) => {
-    res.render('post-show.handlebars', { post })
-  }).catch((err) => {
-    console.log(err.message)
-  });
-})
+  app.put("/posts/:id/vote-up", function(req, res) {
+    Post.findById(req.params.id).exec(function(err, post) {
+      post.upVotes.push(req.user._id);
+      post.voteScore = post.voteTotal + 1;
+      post.save();
 
+      res.status(200);
+    });
+  });
+
+  app.put("/posts/:id/vote-down", function(req, res) {
+    Post.findById(req.params.id).exec(function(err, post) {
+      post.downVotes.push(req.user._id);
+      post.voteScore = post.voteTotal - 1;
+      post.save();
+
+      res.status(200);
+    });
+  });
 
   // NEW -- display a list of all posts
   app.post('/posts/new', function (req, res){

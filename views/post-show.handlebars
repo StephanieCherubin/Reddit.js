@@ -11,6 +11,13 @@
      <div class="text-right">
        <button type="submit">Save</button>
      </div>
+
+     <div class="row">
+       {{#each post.comments}}
+         {{> partials/comment}}
+       {{/each}}
+     </div>
+
    </form>
 
    {{else}}
