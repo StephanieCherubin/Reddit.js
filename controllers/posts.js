@@ -2,9 +2,9 @@ const Post = require('../models/post');
 
 module.exports = (app) => {
 
-  // SHOW -- display a specific post
-  app.get('/posts/:id', (req, res) => {
-    var currentUser = req.user;
+  // // SHOW -- display a specific post
+  // app.get('/posts/:id', (req, res) => {
+  //   var currentUser = req.user;
 
   // LOOK UP THE POST
   app.put("/posts/:id/vote-up", function(req, res) {
