@@ -3,20 +3,17 @@ const Comment = require('../models/comment')
 const Post = require('../models/post');
 
 module.exports = function(app) {
-  // CREATE Comment
+  // CREATE comment
   app.post("/posts/:postId/comments", function(req, res) {
-    // INSTANTIATE INSTANCE OF MODEL
-    const comment = new Comment(req.body);
+    // FIND THE PARENT POST
+    Post.findById(req.params.postId).exec(function(err, post) {
+      // UNSHIFT A NEW COMMENT
+      post.comments.unshift(req.body);
+      // SAVE THE PARENT
+      post.save();
 
-    // SAVE INSTANCE OF Comment MODEL TO DB
-    comment
-      .save()
-      .then(comment => {
-        // REDIRECT TO THE ROOT
-        return res.redirect(`/`);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      // REDIRECT BACK TO THE PARENT POST#SHOW PAGE TO SEE OUR NEW COMMENT IS CREATE
+      return res.redirect(`/posts/` + post._id);
+    });
   });
 };
