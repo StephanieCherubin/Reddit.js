@@ -25,9 +25,10 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
-  comments: [
-    Comment.schema
-  ]
+  comments: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+  }]
 });
 
 // PostSchema.pre("save", function(next) {
