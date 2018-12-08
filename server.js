@@ -1,21 +1,27 @@
+const path = require('path');
 const express = require('express')
-
-require('dotenv').config();
-
+const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-var exphbs = require('express-handlebars');
-app.use(cookieParser()); // Add this after you initialize express.
+require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  extname: '.handlebars',
+  layoutsDir: path.join(__dirname, 'views/layouts/'),
+  partialsDir: path.join(__dirname, 'views/partials'),
+  defaultLayout: 'main'
+}));
+
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
-
+app.use(cookieParser()); // Add this after you initialize express.
 
 var checkAuth = (req, res, next) => {
   console.log("Checking authentication");
@@ -26,10 +32,10 @@ var checkAuth = (req, res, next) => {
     var decodedToken = jwt.decode(token, { complete: true }) || {};
     req.user = decodedToken.payload;
   }
-  console.log("authentication finished")
   next();
 };
 app.use(checkAuth);
+const db = require('./data/reddit-db.js');
 
 const Posts = require('./controllers/posts.js')(app);
 const Post = require('./models/post.js');
