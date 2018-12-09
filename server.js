@@ -18,6 +18,7 @@ app.engine('handlebars', exphbs({
   defaultLayout: 'main'
 }));
 
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
@@ -58,3 +59,11 @@ app.get('/', (req, res) => {
 app.listen(3000, function() {
     console.log(new Date().toISOString() + ": Reddit Server started on port 3000");
 });
+
+if (require.main === module) {
+    let port = process.env.PORT || 3000;
+
+    app.listen(port, () => {
+        console.log(new Date().toISOString() + `App listening on port ${port}!`);
+    });
+}
