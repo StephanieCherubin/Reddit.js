@@ -1,5 +1,5 @@
 {
-  "name": "reddit-clone",
+  "name": "reddit.js",
   "version": "1.0.0",
   "description": "a clone of Reddit with posts, subreddits, and authentication",
   "main": "server.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/StephanieCherubin/I-Reddit-Away.git"
+    "url": "git+ssh://git@github.com:StephanieCherubin/Reddit.js.git"
   },
   "author": "Stephanie Cherubin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/StephanieCherubin/I-Reddit-Away/issues"
+    "url": "https://github.com/StephanieCherubin/Reddit.js/issues"
   },
-  "homepage": "https://github.com/StephanieCherubin/I-Reddit-Away#readme",
+  "homepage": "https://github.com/StephanieCherubin/Reddit.js#readme",
   "dependencies": {
     "bcrypt": "^3.0.2",
     "cookie-parser": "^1.4.3",
