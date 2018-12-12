@@ -28,7 +28,26 @@ const PostSchema = new Schema({
   comments: [{
       type: Schema.Types.ObjectId,
       ref: 'Comment'
-  }]
+  }],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  upVotes: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      unique: true
+  }],
+  downVotes: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      unique: true
+  }],
+  voteScore: {
+      type: Number,
+      default: 0
+  }
 });
 
 // PostSchema.pre("save", function(next) {
