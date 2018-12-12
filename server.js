@@ -49,17 +49,17 @@ const Comments = require('./controllers/comments.js')(app);
 const Auth = require('./controllers/auth.js')(app);
 const User = require('./models/user');
 
-//INDEX
-// app.get('/', (req, res) => {
-//   // var currentUser = req.user;
-//   Post.find({})
-//     .then((posts) => {
-//       res.render('post-index.handlebars', { 'posts': posts, currentUser: req.user })
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     });
-// });
+// INDEX
+app.get('/', (req, res) => {
+  // var currentUser = req.user;
+  Post.find({})
+    .then((posts) => {
+      res.render('post-index.handlebars', { 'posts': posts, currentUser: req.user })
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+});
 
 if (require.main === module) {
     let port = process.env.PORT || 3000;

@@ -4,10 +4,11 @@
 
         {{#if currentUser}}
         <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+          <a href="/posts/new" class="btn btn-primary navbar-btn">New Post</a>
+          <a class="nav-link" href="/logout">Logout</a>
         </li>
         {{else}}
-        <a href="/posts/new" class="btn btn-primary navbar-btn">New Post</a>
+
 
         <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>

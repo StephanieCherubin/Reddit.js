@@ -1,37 +1,22 @@
 <h1 class="form-title">Sign up</h1>
 
 <form class="form" method="post" action="/sign-up">
-  <p class="form-label">
-    <label for="post-user">
-      Username
-    </label>
-  </p>
 
-  <p class="form-input">
-    <input id="post-user" type="text" placeholder="Username" name="postUsername" />
-  </p>
+  <div class="form-group">
+    <label for="post-title">Username</label>
+    <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+  </div>
 
-  <p class="form-label">
-    <label for="post-password">
-      Password
-    </label>
-  </p>
+<div class="form-group">
+  <label for="post-subreddit">Password</label>
+  <input name="password" type="password" class="form-control" id="password" placeholder="password">
+</div>
 
-  <p class="form-input">
-    <input id="post-password" type="password" placeholder="Password" name="postPassword" />
+<div class='text-right'>
+  <button type="submit" class="btn btn-primary">Sign Up!</button>
+</div>
 
-  <p class="form-label">
-    <label for="post-password-confirm">
-      Password Confirmation
-    </label>
-  </p>
-
-  <p class="form-input">
-    <input id="post-password-confirm" type="password" placeholder="Password Confirmation" name="postPasswordConfirm" />
-
-  <p class="form-submit-container">
-    <input id="post-submit" type="submit" /></p>
   <small>Have an account?
-    <a href="#">Click here!</a>
+    <a href="/login">Click here!</a>
   </small>
 </form>
