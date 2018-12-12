@@ -16,7 +16,23 @@ const UserSchema = new Schema({
   username: {
     type: String,
     required: true
-  }
+  },
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  replies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Reply'
+}],
+  Subreddits: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Subreddit'
+  }],
+  comments: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+  }]
 });
 
 // Define the callback with a regular function to avoid problems with this
