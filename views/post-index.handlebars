@@ -1,5 +1,5 @@
 {{#if currentUser}}
-<h1 align="center"> Welcome Back {{ currentUser.username}}</h1>
+<h1 align="center"> Welcome back {{ currentUser.username}}!</h1>
 <br>
 
 {{else}}
@@ -15,7 +15,7 @@
         {{#each posts}}
 
         <li class="list-group-item">
-          <div class="lead">{{post.title}}</div>
+          <div class="lead">{{this.title}}</div>
           <a href="{{post.url}}" target="_blank">{{post.url}}<a>
           <div class="text-right">
             <a href="/n/{{post.subreddit}}">{{post.subreddit}}<a>

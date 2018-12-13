@@ -50,16 +50,18 @@ const Auth = require('./controllers/auth.js')(app);
 const User = require('./models/user');
 
 // INDEX
-app.get('/', (req, res) => {
-  // var currentUser = req.user;
-  Post.find({})
-    .then((posts) => {
-      res.render('post-index.handlebars', { 'posts': posts, currentUser: req.user })
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-});
+// app.get('/', (req, res) => {
+//   var currentUser = req.user;
+//   Post.find({})
+//     .then((posts) => {
+//       res.render('post-index.handlebars', { 'posts': posts, currentUser: req.user })
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// });
+
+require('./controllers/posts')(app);
 
 if (require.main === module) {
     let port = process.env.PORT || 3000;
@@ -68,6 +70,8 @@ if (require.main === module) {
         console.log(new Date().toISOString() + `Reddit server started on port ${port}!`);
     });
 }
+
+
 
 module.exports = app;
 module.exports.stop = () => {

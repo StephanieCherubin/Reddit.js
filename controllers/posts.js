@@ -2,66 +2,86 @@ const Post = require('../models/post');
 
 module.exports = (app) => {
 
-  // // SHOW -- display a specific post
-  // app.get('/posts/:id', (req, res) => {
-  //   var currentUser = req.user;
+  //VOTE UP
+    app.put('/posts/:id/vote-up', (req, res) => {
 
-  // LOOK UP THE POST
-  app.put("/posts/:id/vote-up", function(req, res) {
-    Post.findById(req.params.id).exec(function(err, post) {
-      post.upVotes.push(req.user._id);
-      post.voteScore = post.voteTotal + 1;
-      post.save();
+      Post.findById(req.params.id).then((post) => {
+        post.upVotes.push(req.user._id)
+        post.voteScore = post.voteTotal + 1
+        post.save();
 
-      res.status(200);
+        res.status(200);
+      }).catch((err) => {
+        console.log(err.message);
+      })
+
+      // Post.findById(req.params.id).exec(function (err, post) {
+      //   post.upVotes.push(req.user._id)
+      //   post.voteScore = post.voteTotal + 1
+      //   post.save();
+      //
+      //   res.status(200);
+      // })
+    })
+
+
+    //VOTE DOWN
+    app.put('/posts/:id/vote-down', function (req, res) {
+      Post.findById(req.params.id).exec(function (err, post) {
+        post.downVotes.push(req.user._id)
+        post.voteScore = post.voteTotal - 1
+        post.save();
+
+        res.status(200);
+      })
+    })
+
+
+    //Create a post
+    app.get('/posts/new', function(req,res){
+        res.render('post-new.handlebars' , {currentUser : req.user});
     });
-  });
 
-  app.put("/posts/:id/vote-down", function(req, res) {
-    Post.findById(req.params.id).exec(function(err, post) {
-      post.downVotes.push(req.user._id);
-      post.voteScore = post.voteTotal - 1;
-      post.save();
+    //Show a post
+    app.get('/posts/:id', (req, res) => {
+      var currentUser = req.user;
 
-      res.status(200);
+     // LOOK UP THE POST
+    Post.findById(req.params.id).populate('comments').then((post) => {
+      res.render('post-show.handlebars', { post, currentUser })
+    }).catch((err) => {
+      console.log(err.message)
+        })
+    })
+
+    // SUBREDDIT
+    app.get('/n/:subreddit', function(req, res) {
+      var currentUser = req.user;
+
+      Post.find({ subreddit: req.params.subreddit }).then((posts) => {
+        res.render('post-index.handlebars', { posts, currentUser })
+      }).catch((err) => {
+        console.log(err)
+      })
     });
-  });
 
-  // NEW -- display a list of all posts
-  app.post('/posts/new', function (req, res){
-    // INSTANTIATE INSTANCE OF POST MODEL
-    console.log(req.user);
-    var post = new Post(req.body);
 
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save((err, post) => {
-      // REDIRECT TO THE ROOT
-      return res.redirect(`/`);
+    // CREATE
+  app.post('/posts/new', function(req,res) {
+      // INSTANTIATE INSTANCE OF POST MODEL
+      var currentUser = req.user;
+
+      console.log(req.user)
+      var post = new Post(req.body);
+      //post.url = "/posts/" + post._id;
+      //post.url = req.post.user
+      post.posturl = "/posts/" + post._id;
+      post.username = req.user.username;
+      post.save( (err, post) => {
+          if(err){console.log(err)};
+          console.log(post);
+          res.redirect(post.posturl);
+      });
     });
-  });
+  };
 
-  // CREATE
-  app.post('/posts', (req, res) => {
-      // Only allow logged in users to create posts
-      if (req.user) {
-          const post = new Post(req.body);
-          post.author = req.user._id;
-          post.save
-              .then(post => {
-                  return User.findById(req.user._id);
-          })
-          .then(user => {
-              user.posts.unshift(post);
-              user.save();
-              // Redirect to the new post
-              res.redirect('/posts/' + post._id);
-          })
-          .catch(err => {
-              console.log(err.message);
-          });
-      } else {
-          return res.status(401);
-      }
-
-  })
-};
