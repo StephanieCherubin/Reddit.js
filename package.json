@@ -24,6 +24,7 @@
     "express-generator": "^4.16.1",
     "express-handlebars": "^4.0.3",
     "jsonwebtoken": "^8.5.1",
+    "minimist": "^1.2.5",
     "mongoose": "^5.9.9"
   },
   "devDependencies": {
